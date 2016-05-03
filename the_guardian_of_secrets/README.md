@@ -11,7 +11,7 @@ You found my secret lair, but you'll never find my key.
 My crypto is so strong, i'll give you the cipher : lRekwWbrLTwwbEGeKYEeZKMRXkVd8YdTqkrELxjVswRnp/UX
 ```
 
-La chaine "lRekwWbrLTwwbEGeKYEeZKMRXkVd8YdTqkrELxjVswRnp/UX" doit donc contenir le flag.
+La chaine "lRekwWbrLTwwbEGeKYEeZKMRXkVd8YdTqkrELxjVswRnp/UX" doit contenir le flag.
 Un base64 -d de cette chaine ne renvoi rien d'exploitable (My crypto is so strong, i'll give you the cipher), il faut donc trouver un moyen de la déchiffrer
 
 Dans le cas de l'envoi d'une chaine non-base64, le seveur répond 
@@ -27,23 +27,23 @@ En variant la longueur du message d'entrée, on remarque que la sortie à toujou
 
 De plus, pour une même chaine en entrée, la réponse est toujours la même, ce qui implique un chiffrement avec une clef fixe.
 
-Une clef fixe et un chiffrement par flux fait donc penser à du RC4.
-L'attaque classique sur du RC4 est la récupération de keystream (surtout avec une entrée contrôlable et une sortie récupérable)
+Une clef fixe et un chiffrement par flux fait penser à du RC4.
+L'attaque classique sur ce type d'algo est la récupération de keystream (surtout avec une entrée contrôlable et une sortie récupérable)
 
 ![RC4](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Wep-crypt-alt.svg/305px-Wep-crypt-alt.svg.png)
-
-Donc 
+ 
 ```
 CIPHER = PLAINTEXT xor KEYSTREAM
 ```
 
-Avec KEYSTREAM généré a partir de la clef et l'IV
+Avec KEYSTREAM généré a partir de la clef et l'IV.
+
 On contrôle PLAINTEXT, CIPHER et on a un message SECRET a déchiffrer. L'algo devient alors :
 ```
 FLAG = CIPHER xor PLAINTEXT xor SECRET
 ```
 
-Donc avec xortool :
+Avec xortool :
 ```
 ~/s/B/t/chall ❯❯❯ xortool-xor -f /tmp/01 -f /tmp/02 -f /tmp/03
 BZHCTF{KEYSTREAM_IS_EASIER_THAN_KEY}s�O�I-
