@@ -45,7 +45,7 @@ FLAG = CIPHER xor PLAINTEXT xor SECRET
 
 Avec xortool :
 ```
-~/s/B/t/chall ❯❯❯ xortool-xor -f /tmp/01 -f /tmp/02 -f /tmp/03
+~/s/B/t/chall ❯❯❯ xortool-xor -f /tmp/PLAIN_CONNU -f /tmp/CIPHER_CONNU -f /tmp/SECRET
 BZHCTF{KEYSTREAM_IS_EASIER_THAN_KEY}s�O�I-
 ```
 

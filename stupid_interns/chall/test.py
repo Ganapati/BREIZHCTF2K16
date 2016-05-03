@@ -182,7 +182,7 @@ if __name__ == "__main__":
     c.execute('''CREATE TABLE users
                          (id int, active int, login text, password text)''')
     c.execute("INSERT INTO users VALUES (2,1,'demo','demo')")
-    c.execute("INSERT INTO users VALUES (1,0,'admin','flag{B4DCrypt0}')")
+    c.execute("INSERT INTO users VALUES (1,0,'admin','BZHCTF{B4DCrypt0}')")
     conn.commit()
     #clear = '"_id_" :   2    |"on"  :   1   | "p":   2'
     #print cipher(clear, key)
