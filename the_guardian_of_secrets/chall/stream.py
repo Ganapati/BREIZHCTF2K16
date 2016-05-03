@@ -2,11 +2,9 @@
  
 import socket
 import base64
+import sys
 
 
-TCP_IP = '0.0.0.0'
-TCP_PORT = 1337
-BUFFER_SIZE = 1024
 SECRET_KEY = "!SECRET!!SECRET!"
 FLAG = "BZHCTF{KEYSTREAM_IS_EASIER_THAN_KEY}"
 
@@ -30,23 +28,15 @@ def rc4crypt(data, key=None):
     return ''.join(out)
 
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((TCP_IP, TCP_PORT))
-
 b64_flag = base64.b64encode(rc4crypt(FLAG))
 
-while 1:
-  s.listen(1)
-  conn, addr = s.accept()
-  data = conn.recv(BUFFER_SIZE)
-  if not data or data == "\n" or data == "\r\n":
-    conn.send("You found my secret lair, but you'll never find my key.\n My crypto is so strong, i'll give you the cipher : %s" % b64_flag) 
-    conn.close()
-  try:
-    conn.send("Your secret is safe with me : %s" % base64.b64encode(rc4crypt(base64.b64decode(data))))
-  except TypeError:
-    conn.send("Can't you read a fracking input format ???")
-    conn.close()
-  except:
-    conn.send("Mess with the best, die like the rest.")
-    conn.close()
+data = raw_input()
+if not data or data == "\n" or data == "\r\n":
+  print("You found my secret lair, but you'll never find my key.\n My crypto is so strong, i'll give you the cipher : %s" % b64_flag) 
+  sys.exit(0)
+try:
+  print("Your secret is safe with me : %s" % base64.b64encode(rc4crypt(base64.b64decode(data))))
+except TypeError:
+  print("Can't you read a fracking input format ???")
+except:
+  print("Mess with the best, die like the rest.")
