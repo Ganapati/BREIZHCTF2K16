@@ -11,13 +11,13 @@ Welcome To Super Secure Wireless Zone
 Waiting for card...
 ```
 
-Une première lecture (avec un téléphone ou un des lecteurs a disposition) renvoi la chaine suivante :
+Un premier dump (avec un téléphone ou un des lecteurs a disposition) renvoi la chaine suivante :
 
 ```
 guest:guest
 ```
 
-En tentant de badger sur la borne a disposition pour résoudre le chall, l'écran indique :
+En tentant de badger sur la borne à disposition pour résoudre le chall, l'écran indique :
 ```
 Guest can't read flag
 ```
@@ -36,15 +36,15 @@ Token : '!#/)zW\\xa5\\xa7C\\x89J\\x0eJ\\x80\\x1f\\xc3'
 ```
 
 Un token est généré avec les infos de la carte. Reste à comprendre comment...
-Après quelques tests, on se rend compte que seule la partie apres le ":" est utilisée pour générer le token en question. On est face a une classique login:password.
+Après quelques tests, on se rend compte que seule la partie apres le ":" est utilisée pour générer le token en question. On est face a un classique login:password.
 
 Après une série de tests et en notant les chaines en entrée ainsi que les tokens correspondants, on peut déduire que le token en question est un hash md5 du mot de passe.
 Autre détail qui a son importance, le md5 est présenté en RAW (et non pas hex).
 
-Authentification et raw md5 font donc penser à la technique d'injection (une recherche google permet de trouver des articles ou posts sur ce sujet (https://news.ycombinator.com/item?id=1948308)).
+Authentification et raw md5 font donc penser à une injection SQL (une recherche google permet de trouver des articles ou posts sur ce sujet (https://news.ycombinator.com/item?id=1948308)).
 
-le but est donc maintenant de réussir a générer un hash contenant une injection.
-Soit on lance une boucle jusqu'à tomber sur un hash contenant 'or' (par exemple), soit on utilise la payload utilisée pour un précédent ctf (http://cvk.posthaven.com/sql-injection-with-raw-md5-hashes):
+le but est donc maintenant de réussir a générer un hash contenant le bon payload.
+Soit on lance une boucle jusqu'à tomber sur un hash contenant 'or' (par exemple), soit on utilise le payload utilisée pour un précédent ctf (http://cvk.posthaven.com/sql-injection-with-raw-md5-hashes):
 
 md5('129581926211651571912466741651878684928') == ?T0D??o#??'or'8.N=?
 
